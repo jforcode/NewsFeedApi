@@ -1,4 +1,4 @@
-package com.jeevan.dbModels;
+package com.jeevan.models;
 
 import java.util.Objects;
 
@@ -6,68 +6,75 @@ import java.util.Objects;
  * Created by jeevan on 8/15/18.
  */
 public class Feed {
-	private String rowId;
+	private Integer id;
 	private String title;
 	private String url;
 	private String publisher;
-	private String category;
+	private FeedCategory category;
 	private String publisherUrl;
 	private Long publishedOn;
 
-	public String getRowId() {
-		return rowId;
+	public Integer getId() {
+		return id;
 	}
 
-	public void setRowId(String rowId) {
-		this.rowId = rowId;
+	public Feed setId(Integer id) {
+		this.id = id;
+		return this;
 	}
 
 	public String getTitle() {
 		return title;
 	}
 
-	public void setTitle(String title) {
+	public Feed setTitle(String title) {
 		this.title = title;
+		return this;
 	}
 
 	public String getUrl() {
 		return url;
 	}
 
-	public void setUrl(String url) {
+	public Feed setUrl(String url) {
 		this.url = url;
+		return this;
 	}
 
 	public String getPublisher() {
 		return publisher;
 	}
 
-	public void setPublisher(String publisher) {
+	public Feed setPublisher(String publisher) {
 		this.publisher = publisher;
+		return this;
 	}
 
-	public String getCategory() {
+	public FeedCategory getCategory() {
 		return category;
 	}
 
-	public void setCategory(String category) {
+	public Feed setCategory(FeedCategory category) {
 		this.category = category;
+		return this;
 	}
 
 	public String getPublisherUrl() {
 		return publisherUrl;
 	}
 
-	public void setPublisherUrl(String publisherUrl) {
+	public Feed setPublisherUrl(String publisherUrl) {
 		this.publisherUrl = publisherUrl;
+		return this;
 	}
 
 	public Long getPublishedOn() {
 		return publishedOn;
 	}
 
-	public void setPublishedOn(Long publishedOn) {
+	public Feed setPublishedOn(Long publishedOn) {
 		this.publishedOn = publishedOn;
+		return this;
 	}
 
 	@Override
@@ -75,7 +82,7 @@ public class Feed {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		Feed feed = (Feed) o;
-		return Objects.equals(rowId, feed.rowId) &&
+		return Objects.equals(id, feed.id) &&
 				Objects.equals(title, feed.title) &&
 				Objects.equals(url, feed.url) &&
 				Objects.equals(publisher, feed.publisher) &&
@@ -86,6 +93,6 @@ public class Feed {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(rowId, title, url, publisher, category, publisherUrl, publishedOn);
+		return Objects.hash(id, title, url, publisher, category, publisherUrl, publishedOn);
 	}
 }

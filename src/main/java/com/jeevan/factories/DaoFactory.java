@@ -10,6 +10,12 @@ public class DaoFactory {
 
 	private FeedDao feedDao;
 
+	private DaoFactory() {}
+
+	public static void init() {
+		mInstance = new DaoFactory();
+	}
+
 	public static FeedDao getFeedDao() {
 		if (mInstance.feedDao == null) {
 			mInstance.feedDao = new FeedDao();

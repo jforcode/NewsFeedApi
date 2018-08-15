@@ -10,6 +10,8 @@ public class ServiceFactory {
 
 	private FeedService feedService;
 
+	private ServiceFactory() {}
+
 	public static void init() {
 		mInstance = new ServiceFactory();
 	}
