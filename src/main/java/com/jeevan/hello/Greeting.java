@@ -1,4 +1,4 @@
-package hello;
+package com.jeevan.hello;
 
 /**
  * Created by jeevan on 8/11/18.
