@@ -2,11 +2,8 @@ package com.jeevan.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jeevan.factories.ServiceFactory;
-import com.jeevan.models.FilterReq;
-import com.jeevan.models.SortReq;
+import com.jeevan.models.*;
 import com.jeevan.services.FeedService;
-import com.jeevan.models.Feed;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -26,20 +23,23 @@ public class FeedController {
 		this.feedService = ServiceFactory.getFeedService();
 	}
 
-	@RequestMapping(method = RequestMethod.GET, path = "/feed")
-	public List<Feed> getFeed(
-			@RequestParam(name = "page", required = false) Integer pageNo,
-			@RequestParam(name = "srch", required = false) String searchTerm,
-			@RequestParam(name = "sort", required = false) String sortParamsJson,
-			@RequestParam(name = "filter", required = false) String filterParamsJson)
+	@RequestMapping(method = RequestMethod.POST, path = "/feed")
+	public FeedRes getFeed(
+			@RequestBody FeedPostReq req)
 			throws SQLException, IOException {
 
-		ObjectMapper mapper = new ObjectMapper();
-		SortReq sortParams = StringUtils.isEmpty(sortParamsJson)
-				? null : mapper.readValue(sortParamsJson, SortReq.class);
-		FilterReq filterParams = StringUtils.isEmpty(filterParamsJson)
-				? null : mapper.readValue(filterParamsJson, FilterReq.class);
+		return feedService.getNewsFeed(req.getPageNum(), req.getSearchTerm(), req.getSortParams(), req.getFilterParams());
+	}
 
-		return feedService.getNewsFeed(pageNo, searchTerm, sortParams, filterParams);
+	@RequestMapping(path = "/categories")
+	public List<FeedCategory> getFeedCategories() {
+		return feedService.getFeedCategories();
+	}
+
+	@RequestMapping(path = "/publishers")
+	public PublisherRes getPublishers(
+			@RequestParam(name = "limit", required = false) Integer limit)
+			throws SQLException{
+		return feedService.getPublishers(limit);
 	}
 }

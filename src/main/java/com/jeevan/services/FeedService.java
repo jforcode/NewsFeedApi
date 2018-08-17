@@ -2,10 +2,7 @@ package com.jeevan.services;
 
 import com.jeevan.daos.FeedDao;
 import com.jeevan.factories.DaoFactory;
-import com.jeevan.models.Feed;
-import com.jeevan.models.FeedOrderableBy;
-import com.jeevan.models.FilterReq;
-import com.jeevan.models.SortReq;
+import com.jeevan.models.*;
 
 import java.sql.SQLException;
 import java.util.Arrays;
@@ -23,10 +20,8 @@ public class FeedService {
 		feedDao = DaoFactory.getFeedDao();
 	}
 
-	public List<Feed> getNewsFeed(Integer pageNo, String searchTerm, SortReq sortParams, FilterReq filterParams) throws SQLException {
+	public FeedRes getNewsFeed(Integer pageNo, String searchTerm, SortReq sortParams, FilterReq filterParams) throws SQLException {
 		List<String> categoryIds = null;
-		Long startDate = null;
-		Long endDate = null;
 		List<String> publishers = null;
 		FeedOrderableBy orderBy = null;
 		boolean descOrder = false;
@@ -41,12 +36,24 @@ public class FeedService {
 		}
 		if (filterParams != null) {
 			categoryIds = filterParams.getCategoryIds() != null ? Arrays.asList(filterParams.getCategoryIds()) : null;
-			startDate = filterParams.getStartDate();
-			endDate = filterParams.getEndDate();
 			publishers = filterParams.getPublishers() != null ? Arrays.asList(filterParams.getPublishers()) : null;
 		}
 
-		return feedDao.getNewsFeed(searchTerm, categoryIds, startDate, endDate, publishers, orderBy, descOrder, pageSize, offset);
+		Integer feedCount = feedDao.getCountNewsFeed(searchTerm, categoryIds, publishers);
+		List<Feed> feeds = feedDao.getNewsFeed(searchTerm, categoryIds, publishers, orderBy, descOrder, pageSize, offset);
+
+		return new FeedRes(feedCount, feeds);
 	}
 
+	// TODO: this should also be from db
+	public List<FeedCategory> getFeedCategories() {
+		return Arrays.asList(FeedCategory.values());
+	}
+
+	public PublisherRes getPublishers(Integer limit) throws SQLException {
+		Integer publisherCount = feedDao.getPublishersCount();
+		List<Publisher> publishers = feedDao.getPublishers(limit);
+
+		return new PublisherRes(publisherCount, publishers);
+	}
 }
