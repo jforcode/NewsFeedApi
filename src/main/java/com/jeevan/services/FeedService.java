@@ -5,8 +5,10 @@ import com.jeevan.factories.DaoFactory;
 import com.jeevan.models.*;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by jeevan on 8/15/18.
@@ -52,7 +54,12 @@ public class FeedService {
 
 	public PublisherRes getPublishers(Integer limit) throws SQLException {
 		Integer publisherCount = feedDao.getPublishersCount();
-		List<Publisher> publishers = feedDao.getPublishers(limit);
+		Map<String, List<String>> mapPublToUrls = feedDao.getPublishers(limit);
+
+		List<Publisher> publishers = new ArrayList<>();
+		for (String publisher : mapPublToUrls.keySet()) {
+			publishers.add(new Publisher(publisher, mapPublToUrls.get(publisher)));
+		}
 
 		return new PublisherRes(publisherCount, publishers);
 	}

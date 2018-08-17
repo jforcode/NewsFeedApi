@@ -1,11 +1,18 @@
 package com.jeevan.models;
 
+import java.util.List;
+
 /**
  * Created by jeevan on 8/16/18.
  */
 public class Publisher {
 	private String publisher;
-	private String publisherUrl;
+	private List<String> publisherUrls;
+
+	public Publisher(String publisher, List<String> publisherUrls) {
+		this.publisher = publisher;
+		this.publisherUrls = publisherUrls;
+	}
 
 	public String getPublisher() {
 		return publisher;
@@ -16,12 +23,11 @@ public class Publisher {
 		return this;
 	}
 
-	public String getPublisherUrl() {
-		return publisherUrl;
+	public List<String> getPublisherUrls() {
+		return publisherUrls;
 	}
 
-	public Publisher setPublisherUrl(String publisherUrl) {
-		this.publisherUrl = publisherUrl;
-		return this;
+	public void setPublisherUrls(List<String> publisherUrls) {
+		this.publisherUrls = publisherUrls;
 	}
 }

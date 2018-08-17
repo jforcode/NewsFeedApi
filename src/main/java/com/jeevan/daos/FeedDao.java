@@ -9,7 +9,9 @@ import org.springframework.util.StringUtils;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by jeevan on 8/15/18.
@@ -141,7 +143,7 @@ public class FeedDao {
 		}
 	}
 
-	public List<Publisher> getPublishers(Integer limit) throws SQLException {
+	public Map<String, List<String>> getPublishers(Integer limit) throws SQLException {
 		String limitPart = limit == null || limit <= 0
 				? "" : " LIMIT ? ";
 
@@ -158,18 +160,17 @@ public class FeedDao {
 				}
 
 				ResultSet rs = stmt.executeQuery();
-				List<Publisher> publishers = new ArrayList<>();
+				Map<String, List<String>> mapPublToUrl = new HashMap<>();
 				while (rs.next()) {
-					publishers.add(getPublisherFromResultSet(rs));
+					String publisher = rs.getString("publisher");
+					String publisherUrl = rs.getString("publisher_url");
+
+					List<String> currUrls = mapPublToUrl.computeIfAbsent(publisher, k -> new ArrayList<>());
+					currUrls.add(publisherUrl);
 				}
-				return publishers;
+				return mapPublToUrl;
 			}
 		}
 	}
 
-	private Publisher getPublisherFromResultSet(ResultSet rs) throws SQLException {
-		return new Publisher()
-				.setPublisher(rs.getString("publisher"))
-				.setPublisherUrl(rs.getString("publisher_url"));
-	}
 }
