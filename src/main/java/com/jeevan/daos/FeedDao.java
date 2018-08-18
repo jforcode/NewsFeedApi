@@ -8,10 +8,7 @@ import com.jeevan.utils.Util;
 import org.springframework.util.StringUtils;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by jeevan on 8/15/18.
@@ -160,7 +157,7 @@ public class FeedDao {
 				}
 
 				ResultSet rs = stmt.executeQuery();
-				Map<String, List<String>> mapPublToUrl = new HashMap<>();
+				Map<String, List<String>> mapPublToUrl = new TreeMap<>();
 				while (rs.next()) {
 					String publisher = rs.getString("publisher");
 					String publisherUrl = rs.getString("publisher_url");

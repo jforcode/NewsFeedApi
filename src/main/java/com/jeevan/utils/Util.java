@@ -5,7 +5,13 @@ package com.jeevan.utils;
  */
 public class Util {
 	public static String getRepeatedQueryString(int numTimes) {
-		return "?" + (String.format("%" + (numTimes - 1) + "s", " ")
-				.replace(" ", ", ?"));
+		if (numTimes <= 0) {
+			return "";
+		}
+		String allButOne = numTimes > 1
+				? String.format("%" + (numTimes - 1) + "s", " ")
+				.replace(" ", ", ?")
+				: "";
+		return "?" + allButOne;
 	}
 }
