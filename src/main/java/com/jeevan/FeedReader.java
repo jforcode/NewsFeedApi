@@ -1,5 +1,6 @@
-package com.jeevan.controllers;
+package com.jeevan;
 
+import com.jeevan.controllers.FeedMetaController;
 import com.jeevan.factories.DaoFactory;
 import com.jeevan.factories.DbFactory;
 import com.jeevan.factories.ServiceFactory;
@@ -13,16 +14,14 @@ import java.sql.SQLException;
  * Should be a different service. For this program, created in the same service.
  */
 public class FeedReader {
-	private static FeedMetaService feedMetaService;
 
 	public static void main(String[] args) throws IOException, SQLException {
 		DbFactory.initialize("src/main/resources/hikari.properties");
 		DaoFactory.init();
 		ServiceFactory.init();
-		feedMetaService = ServiceFactory.getFeedMetaService();
 
 		String excelFileName = "src/main/resources/news_feed.csv";
-		feedMetaService.clearFeeds();
-		feedMetaService.parseAndCreateFeeds(excelFileName);
+		FeedMetaController controller = new FeedMetaController(excelFileName);
+		controller.readExcelAndCreateFeedTable();
 	}
 }

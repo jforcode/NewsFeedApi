@@ -6,6 +6,7 @@ import com.jeevan.factories.ServiceFactory;
 import com.jeevan.models.Feed;
 import com.jeevan.models.FeedRes;
 import com.jeevan.models.FilterReq;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -30,6 +31,6 @@ public class FeedServiceTest {
 		FilterReq filterParams = new FilterReq();
 		filterParams.setPublishers(new String[]{"Game Front", "Gamenguide"});
 		FeedRes feed = feedService.getNewsFeed(1, null, null, filterParams);
-		System.out.println();
+		Assert.assertNotNull(feed);
 	}
 }

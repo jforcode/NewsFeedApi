@@ -13,6 +13,7 @@ public class Application {
 		ServiceFactory.init();
 		DaoFactory.init();
 		DbFactory.initialize("src/main/resources/hikari.properties");
+
         SpringApplication.run(Application.class, args);
     }
 }
