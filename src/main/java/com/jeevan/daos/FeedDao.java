@@ -126,7 +126,7 @@ public class FeedDao {
 
 	public Integer getPublishersCount() throws SQLException {
 		String query = "" +
-				" SELECT COUNT(DISTINCT(publisher))" +
+				" SELECT COUNT(DISTINCT(publisher)) AS count" +
 				" FROM news_feed ";
 
 		try (Connection conn = DbFactory.getConnection()) {
@@ -145,7 +145,6 @@ public class FeedDao {
 		String query = "" +
 				" SELECT DISTINCT publisher, publisher_url " +
 				" FROM news_feed " +
-				" ORDER BY publisher_lower " +
 				limitPart;
 
 		try (Connection conn = DbFactory.getConnection()) {
@@ -155,7 +154,7 @@ public class FeedDao {
 				}
 
 				ResultSet rs = stmt.executeQuery();
-				Map<String, List<String>> mapPublToUrl = new TreeMap<>();
+				Map<String, List<String>> mapPublToUrl = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
 				while (rs.next()) {
 					String publisher = rs.getString("publisher");
 					String publisherUrl = rs.getString("publisher_url");
