@@ -7,10 +7,12 @@ import java.util.List;
  */
 public class FeedRes {
 	private Integer countAllFeeds;
+	private Integer pageSize;
 	private List<Feed> feeds;
 
-	public FeedRes(Integer countAllFeeds, List<Feed> feeds) {
+	public FeedRes(Integer countAllFeeds, Integer pageSize, List<Feed> feeds) {
 		this.countAllFeeds = countAllFeeds;
+		this.pageSize = pageSize;
 		this.feeds = feeds;
 	}
 
@@ -20,6 +22,14 @@ public class FeedRes {
 
 	public void setCountAllFeeds(Integer countAllFeeds) {
 		this.countAllFeeds = countAllFeeds;
+	}
+
+	public Integer getPageSize() {
+		return pageSize;
+	}
+
+	public void setPageSize(Integer pageSize) {
+		this.pageSize = pageSize;
 	}
 
 	public List<Feed> getFeeds() {

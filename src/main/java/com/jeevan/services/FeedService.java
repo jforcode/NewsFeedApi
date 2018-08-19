@@ -44,7 +44,7 @@ public class FeedService {
 		Integer feedCount = feedDao.getCountNewsFeed(searchTerm, categoryIds, publishers);
 		List<Feed> feeds = feedDao.getNewsFeed(searchTerm, categoryIds, publishers, orderBy, descOrder, pageSize, offset);
 
-		return new FeedRes(feedCount, feeds);
+		return new FeedRes(feedCount, pageSize, feeds);
 	}
 
 	// TODO: this should also be from db

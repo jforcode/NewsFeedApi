@@ -10,7 +10,7 @@ public class Feed {
 	private String title;
 	private String url;
 	private String publisher;
-	private String category;
+	private FeedCategory category;
 	private String publisherUrl;
 	private Long publishedOn;
 
@@ -50,11 +50,11 @@ public class Feed {
 		return this;
 	}
 
-	public String getCategory() {
+	public FeedCategory getCategory() {
 		return category;
 	}
 
-	public Feed setCategory(String category) {
+	public Feed setCategory(FeedCategory category) {
 		this.category = category;
 		return this;
 	}

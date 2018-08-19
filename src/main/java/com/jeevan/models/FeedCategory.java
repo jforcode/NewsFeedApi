@@ -7,8 +7,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
  */
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum FeedCategory {
-	BUSINESS("business", "b"),
-	TECHNOLOGY("technology", "t");
+	BUSINESS("Business", "b"),
+	TECHNOLOGY("Technology", "t");
 
 	private String value;
 	private String id;

@@ -2,6 +2,7 @@ package com.jeevan.daos;
 
 import com.jeevan.factories.DbFactory;
 import com.jeevan.models.Feed;
+import com.jeevan.models.FeedCategory;
 import com.jeevan.models.FeedOrderableBy;
 import com.jeevan.models.Publisher;
 import com.jeevan.utils.Util;
@@ -118,18 +119,15 @@ public class FeedDao {
 				.setTitle(rs.getString("title"))
 				.setUrl(rs.getString("url"))
 				.setPublisher(rs.getString("publisher"))
-				.setCategory(rs.getString("category"))
+				.setCategory(FeedCategory.getCategory(rs.getString("category")))
 				.setPublisherUrl(rs.getString("publisher_url"))
 				.setPublishedOn(publishedOn != null ? publishedOn.getTime() : null);
 	}
 
 	public Integer getPublishersCount() throws SQLException {
 		String query = "" +
-				" SELECT COUNT(*) AS count FROM (" +
-				"   SELECT DISTINCT publisher, publisher_url " +
-				"   FROM news_feed " +
-				"   ORDER BY publisher " +
-				" ) temp_publishers ";
+				" SELECT COUNT(DISTINCT(publisher))" +
+				" FROM news_feed ";
 
 		try (Connection conn = DbFactory.getConnection()) {
 			try (PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -146,8 +144,8 @@ public class FeedDao {
 
 		String query = "" +
 				" SELECT DISTINCT publisher, publisher_url " +
-				" FROM news_feed" +
-				" ORDER BY publisher " +
+				" FROM news_feed " +
+				" ORDER BY publisher_lower " +
 				limitPart;
 
 		try (Connection conn = DbFactory.getConnection()) {

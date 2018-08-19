@@ -4,7 +4,7 @@ package com.jeevan.models;
  * Created by jeevan on 8/15/18.
  */
 public enum FeedOrderableBy {
-	PUBLISHER("publisher", "publisher"),
+	PUBLISHER("publisher", "publisher_lower"),
 	PUBLISHED_ON("publishedOn", "published_on");
 
 	private String apiField;
