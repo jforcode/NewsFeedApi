@@ -57,8 +57,8 @@ public class FeedService {
 		Map<String, List<String>> mapPublToUrls = feedDao.getPublishers(limit);
 
 		List<Publisher> publishers = new ArrayList<>();
-		for (String publisher : mapPublToUrls.keySet()) {
-			publishers.add(new Publisher(publisher, mapPublToUrls.get(publisher)));
+		for (Map.Entry<String, List<String>> entry : mapPublToUrls.entrySet()) {
+			publishers.add(new Publisher(entry.getKey(), entry.getValue()));
 		}
 
 		return new PublisherRes(publisherCount, publishers);

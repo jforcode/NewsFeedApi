@@ -143,9 +143,14 @@ public class FeedDao {
 				? "" : " LIMIT ? ";
 
 		String query = "" +
-				" SELECT DISTINCT publisher, publisher_url " +
-				" FROM news_feed " +
-				limitPart;
+				" SELECT NE.publisher, NE.publisher_url " +
+				" FROM news_feed NE" +
+				" INNER JOIN (" +
+				"   SELECT DISTINCT(NE2.publisher) AS publisher, publisher_lower " +
+				"   FROM news_feed NE2 " +
+				"   ORDER BY NE2.publisher_lower " +
+				limitPart +
+				" ) NE2 ON NE.publisher = NE2.publisher";
 
 		try (Connection conn = DbFactory.getConnection()) {
 			try (PreparedStatement stmt = conn.prepareStatement(query)) {
