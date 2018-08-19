@@ -1,4 +1,4 @@
-# News Feed - Front End
+# News Feed - API
 
 News Feed displays news feed from a set of sources. This is a practice project to build something cool and learn a lot of stuff on the journey. Although looking elementary, the news feed project offers a lot of logical and design challenges, and is really a great project for devs of all levels to learn a lot.
 
@@ -19,9 +19,9 @@ Setup db, and change credentials in src/main/resources/hikari.properties
 
 mvn clean install
 
-Run src/main/java/com/jeevan/FeedReader.java to setup the required tables.
+Run com.jeevan.FeedReader.java to setup the required tables.
 
-Run src/main/java/com/jeevan/Application.java to start the API server.
+Run com.jeevan.Application.java to start the API server.
 
 Go to localhost:8080 to see a "Hello There!" message indicating that the server is running.
 
