@@ -1,6 +1,7 @@
 package com.jeevan.factories;
 
 import com.jeevan.daos.FeedDao;
+import com.jeevan.daos.FeedMetaDao;
 
 /**
  * Created by jeevan on 8/15/18.
@@ -9,6 +10,8 @@ public class DaoFactory {
 	private static DaoFactory mInstance;
 
 	private FeedDao feedDao;
+
+	private FeedMetaDao feedMetaDao;
 
 	private DaoFactory() {}
 
@@ -25,5 +28,16 @@ public class DaoFactory {
 
 	public static void setFeedDao(FeedDao feedDao) {
 		mInstance.feedDao = feedDao;
+	}
+
+	public static FeedMetaDao getFeedMetaDao() {
+		if (mInstance.feedMetaDao == null) {
+			mInstance.feedMetaDao = new FeedMetaDao();
+		}
+		return mInstance.feedMetaDao;
+	}
+
+	public static void setFeedMetaDao(FeedMetaDao feedMetaDao) {
+		mInstance.feedMetaDao = feedMetaDao;
 	}
 }
