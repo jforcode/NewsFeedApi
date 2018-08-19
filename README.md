@@ -16,13 +16,13 @@ This is the REST based API server.
 
 ```
 git clone https://github.com/jforcode/NewsFeedApi.git
+cd NewsFeedApi
 
-Setup db, and change credentials in src/main/resources/hikari.properties
+Setup db, and update required properties in src/main/resources/hikari.properties
 
-mvn clean install
+mvn clean install to build the project.
 
-Run com.jeevan.FeedReader.java to setup the required tables.
-
+Run com.jeevan.FeedReader.java to parse the csv file and dump it to database.
 Run com.jeevan.Application.java to start the API server.
 
 Go to localhost:8080 to see a "Hello There!" message indicating that the server is running.
