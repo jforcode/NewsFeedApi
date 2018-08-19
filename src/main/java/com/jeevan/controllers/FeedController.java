@@ -23,6 +23,11 @@ public class FeedController {
 		this.feedService = ServiceFactory.getFeedService();
 	}
 
+	@RequestMapping(method = RequestMethod.GET, path = "/")
+	public String root() {
+		return "Hello There!";
+	}
+
 	@RequestMapping(method = RequestMethod.POST, path = "/feed")
 	public FeedRes getFeed(
 			@RequestBody FeedPostReq req)
