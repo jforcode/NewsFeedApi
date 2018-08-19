@@ -15,6 +15,8 @@ This is the REST based API server.
 ## Installation
 
 ```
+git clone https://github.com/jforcode/NewsFeedApi.git
+
 Setup db, and change credentials in src/main/resources/hikari.properties
 
 mvn clean install
