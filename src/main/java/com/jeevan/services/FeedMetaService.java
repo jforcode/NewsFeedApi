@@ -4,13 +4,9 @@ import com.jeevan.daos.FeedMetaDao;
 import com.jeevan.factories.DaoFactory;
 import com.jeevan.models.Feed;
 import com.jeevan.models.FeedCategory;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.poifs.filesystem.POIFSFileSystem;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
+import com.opencsv.CSVReader;
 
-import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -26,36 +22,30 @@ public class FeedMetaService {
 		this.feedMetaDao = DaoFactory.getFeedMetaDao();
 	}
 
+	public void clearFeeds() throws SQLException {
+		feedMetaDao.resetFeedTable();
+	}
+
 	public void parseAndCreateFeeds(String fileName) throws IOException, SQLException {
-		try (POIFSFileSystem fs = new POIFSFileSystem(new FileInputStream(fileName))) {
-			HSSFWorkbook wb = new HSSFWorkbook(fs);
-			HSSFSheet sheet = wb.getSheetAt(0);
-			int rows = sheet.getPhysicalNumberOfRows();
-
+		try (CSVReader reader = new CSVReader(new FileReader(fileName))) {
 			feedMetaDao.createFeedTableAndIndices();
-
 			List<Feed> feedsToInsert = new ArrayList<>();
-			for (int i = 0; i < rows; i++) {
-				Row row = sheet.getRow(i);
-				feedsToInsert.add(getFeedFromRow(row));
-			}
 
+			String[] line;
+			while ((line = reader.readNext()) != null) {
+				feedsToInsert.add(getFeedFromRow(line));
+			}
 			feedMetaDao.insertFeeds(feedsToInsert);
 		}
 	}
 
-	private Feed getFeedFromRow(Row row) {
+	private Feed getFeedFromRow(String[] row) {
 		return new Feed()
-		.setTitle(getCellValue(row, 1))
-		.setUrl(getCellValue(row, 2))
-		.setPublisher(getCellValue(row, 3))
-		.setCategory(FeedCategory.getCategory(getCellValue(row, 4)))
-		.setPublisherUrl(getCellValue(row, 5))
-		.setPublishedOn(Long.parseLong(getCellValue(row, 6)));
-	}
-
-	private String getCellValue(Row row, int col) {
-		Cell cell = row.getCell(col);
-		return cell != null ? cell.getStringCellValue() : "";
+				.setTitle(row[1])
+				.setUrl(row[2])
+				.setPublisher(row[3])
+				.setCategory(FeedCategory.getCategory(row[4]))
+				.setPublisherUrl(row[5])
+				.setPublishedOn(Long.parseLong(row[6]));
 	}
 }

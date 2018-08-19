@@ -95,4 +95,17 @@ public class Feed {
 	public int hashCode() {
 		return Objects.hash(id, title, url, publisher, category, publisherUrl, publishedOn);
 	}
+
+	@Override
+	public String toString() {
+		return "Feed{" +
+				"id=" + id +
+				", title='" + title + '\'' +
+				", url='" + url + '\'' +
+				", publisher='" + publisher + '\'' +
+				", category=" + category +
+				", publisherUrl='" + publisherUrl + '\'' +
+				", publishedOn=" + publishedOn +
+				'}';
+	}
 }
