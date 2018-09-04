@@ -1,10 +1,16 @@
 package com.jeevan.factories;
 
+import com.jeevan.Application;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Properties;
 
 /**
  * Created by jeevan on 8/15/18.
@@ -12,8 +18,15 @@ import java.sql.SQLException;
 public class DbFactory {
 	private static HikariDataSource ds;
 
-	public static void initialize(String configLocation) {
-		HikariConfig config = new HikariConfig(configLocation);
+	public static void initialize(Class caller, String propsFileInClassPath) throws IOException {
+		Properties hikari = new Properties();
+		InputStream hikariProps = caller.getClassLoader().getResourceAsStream(propsFileInClassPath);
+		hikari.load(hikariProps);
+		initialize(hikari);
+	}
+
+	public static void initialize(Properties properties) {
+		HikariConfig config = new HikariConfig(properties);
 		ds = new HikariDataSource(config);
 	}
 

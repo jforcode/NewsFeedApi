@@ -10,6 +10,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -18,8 +19,8 @@ import java.util.List;
  */
 public class FeedServiceTest {
 	@Before
-	public void init() {
-		DbFactory.initialize("src/test/resources/hikari.properties");
+	public void init() throws IOException {
+		DbFactory.initialize(getClass(), "hikari.properties");
 		DaoFactory.init();
 		ServiceFactory.init();
 	}

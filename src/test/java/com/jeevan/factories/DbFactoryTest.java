@@ -2,6 +2,7 @@ package com.jeevan.factories;
 
 import org.junit.Test;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,8 +13,8 @@ import java.sql.SQLException;
  */
 public class DbFactoryTest {
 	@Test
-	public void dbConnectivityTest() throws SQLException {
-		DbFactory.initialize("src/test/resources/hikari.properties");
+	public void dbConnectivityTest() throws SQLException, IOException {
+		DbFactory.initialize(getClass(), "hikari.properties");
 		try (Connection conn = DbFactory.getConnection()) {
 			try (PreparedStatement stmt = conn.prepareStatement("SELECT NOW()")) {
 				ResultSet rs = stmt.executeQuery();

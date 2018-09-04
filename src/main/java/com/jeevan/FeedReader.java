@@ -7,7 +7,9 @@ import com.jeevan.factories.ServiceFactory;
 import com.jeevan.services.FeedMetaService;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.SQLException;
+import java.util.Properties;
 
 /**
  * Created by jeevan on 8/19/18.
@@ -16,7 +18,11 @@ import java.sql.SQLException;
 public class FeedReader {
 
 	public static void main(String[] args) throws IOException, SQLException {
-		DbFactory.initialize("src/main/resources/hikari.properties");
+		Properties hikari = new Properties();
+		InputStream hikariProps = Application.class.getResourceAsStream("hikari.properties");
+		hikari.load(hikariProps);
+		DbFactory.initialize(hikari);
+
 		DaoFactory.init();
 		ServiceFactory.init();
 
