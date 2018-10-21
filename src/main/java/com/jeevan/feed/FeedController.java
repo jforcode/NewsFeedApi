@@ -1,6 +1,5 @@
 package com.jeevan.feed;
 
-import com.jeevan.feed.Factory;
 import com.jeevan.feed.dao.Article;
 import com.jeevan.feed.dao.IFeedDao;
 import com.jeevan.feed.reqModels.FeedRequest;

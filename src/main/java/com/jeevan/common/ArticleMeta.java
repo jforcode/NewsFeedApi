@@ -3,7 +3,7 @@ package com.jeevan.common;
 public class ArticleMeta {
 	public static final String TABLE_NAME = "articles";
 
-	public enum Column {
+	public enum Columns {
 		_ID("_id"),
 		API_SOURCE_NAME("api_source_name"),
 		SOURCE_ID("source_id"),
@@ -20,8 +20,16 @@ public class ArticleMeta {
 
 		private String name;
 
-		Column(String name) {
+		public String toString() {
+			return name;
+		}
+
+		Columns(String name) {
 			this.name = name;
+		}
+
+		public String getName() {
+			return name;
 		}
 	}
 }

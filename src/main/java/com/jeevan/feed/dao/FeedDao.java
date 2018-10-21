@@ -1,5 +1,7 @@
 package com.jeevan.feed.dao;
 
+import com.jeevan.common.ArticleMeta;
+import com.jeevan.common.ArticleMeta.Columns;
 import com.jeevan.factories.DbFactory;
 import com.jeevan.feed.reqModels.FeedRequest;
 
@@ -16,7 +18,7 @@ import java.util.Map;
  */
 
 public class FeedDao implements IFeedDao {
-	public List<Article> getArticles(FeedRequest req) throws SQLException {
+	public List<Article> getArticles(FeedRequest req) throws Exception {
 		ArticlesQueryBuilder helper = new ArticlesQueryBuilder(req).build();
 		String query = helper.getQuery();
 		try (Connection conn = DbFactory.getConnection()) {
@@ -37,8 +39,21 @@ public class FeedDao implements IFeedDao {
 		}
 	}
 
-	private Article getArticleFromResultSet(Map<Article.Meta.Column, Integer> mapColumnToIndex, ResultSet rs) {
-		return null;
+	private Article getArticleFromResultSet(Map<String, Integer> mapColToInd, ResultSet rs) throws SQLException {
+		return new Article()
+			.set_id(rs.getLong(mapColToInd.get(Columns._ID.getName())))
+			.setApiSourceName(rs.getString(mapColToInd.get(Columns.API_SOURCE_NAME.getName())))
+			.setSourceId(rs.getString(mapColToInd.get(Columns.SOURCE_ID.getName())))
+			.setSourceName(rs.getString(mapColToInd.get(Columns.SOURCE_NAME.getName())))
+			.setAuthor(rs.getString(mapColToInd.get(Columns.AUTHOR.getName())))
+			.setTitle(rs.getString(mapColToInd.get(Columns.TITLE.getName())))
+			.setDescription(rs.getString(mapColToInd.get(Columns.DESCRIPTION.getName())))
+			.setUrl(rs.getString(mapColToInd.get(Columns.URL.getName())))
+			.setUrlToImage(rs.getString(mapColToInd.get(Columns.URL_TO_IMAGE.getName())))
+			.setPublishedAt(rs.getLong(mapColToInd.get(Columns.PUBLISHED_AT.getName())))
+			.setCreatedAt(rs.getLong(mapColToInd.get(Columns.CREATED_AT.getName())))
+			.setUpdatedAt(rs.getLong(mapColToInd.get(Columns.UPDATED_AT.getName())))
+			.setStatus(rs.getString(mapColToInd.get(Columns.STATUS.getName())));
 	}
 
 }

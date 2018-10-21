@@ -10,5 +10,5 @@ import java.util.List;
  * Created by jeevan on 10/21/18.
  */
 public interface IFeedDao {
-	List<Article> getArticles(FeedRequest req) throws SQLException;
+	List<Article> getArticles(FeedRequest req) throws Exception;
 }

@@ -1,6 +1,7 @@
 package com.jeevan.feed.dao;
 
 import com.jeevan.common.ArticleMeta;
+import com.jeevan.common.ArticleMeta.Columns;
 import com.jeevan.common.SourceMeta;
 import com.jeevan.feed.Meta.FilterType;
 import com.jeevan.feed.Meta.SortBy;
@@ -29,10 +30,9 @@ public class ArticlesQueryBuilder {
 
 	private String query = "";
 	private List<Object> queryParams;
-	private Map<ArticleMeta.Column, Integer> mapColumnToIndex;
+	private Map<String, Integer> mapColumnToIndex;
 
 	public ArticlesQueryBuilder(FeedRequest req) throws Exception {
-		mapColumnToIndex = new HashMap<>();
 		this.withPagination(req.getPageNum(), req.getPageSize())
 			.withSearchTerm(req.getSearchTerm())
 			.withSortParams(req.getSortParams())
@@ -54,9 +54,9 @@ public class ArticlesQueryBuilder {
 			return this;
 		}
 
-		searchPart = ARTICLE_ALIAS + "." + ArticleMeta.Column.TITLE + " LIKE %?% OR " +
-						 ARTICLE_ALIAS + "." + ArticleMeta.Column.AUTHOR + " LIKE %?% OR " +
-						 ARTICLE_ALIAS + "." + ArticleMeta.Column.DESCRIPTION + " LIKE %?% ";
+		searchPart = ARTICLE_ALIAS + "." + Columns.TITLE + " LIKE %?% OR " +
+						 ARTICLE_ALIAS + "." + Columns.AUTHOR + " LIKE %?% OR " +
+						 ARTICLE_ALIAS + "." + Columns.DESCRIPTION + " LIKE %?% ";
 		searchParams = Arrays.asList(searchTerm, searchTerm, searchTerm);
 		return this;
 	}
@@ -68,9 +68,9 @@ public class ArticlesQueryBuilder {
 
 		String sortColumn;
 		switch (sortBy) {
-			case TITLE: sortColumn = ARTICLE_ALIAS + "." + ArticleMeta.Column.TITLE; break;
-			case SOURCE: sortColumn = ARTICLE_ALIAS + "." + ArticleMeta.Column.SOURCE_NAME; break;
-			case PUBLISHED_AT: sortColumn = ARTICLE_ALIAS + "." + ArticleMeta.Column.PUBLISHED_AT; break;
+			case TITLE: sortColumn = ARTICLE_ALIAS + "." + Columns.TITLE; break;
+			case SOURCE: sortColumn = ARTICLE_ALIAS + "." + Columns.SOURCE_NAME; break;
+			case PUBLISHED_AT: sortColumn = ARTICLE_ALIAS + "." + Columns.PUBLISHED_AT; break;
 			default: throw new Exception("");
 		}
 
@@ -94,10 +94,10 @@ public class ArticlesQueryBuilder {
 
 			String col;
 			switch (filterType) {
-				case SOURCE: col = SOURCE_ALIAS + "." + SourceMeta.Column.NAME; break;
-				case CATEGORY: col = SOURCE_ALIAS + "." + SourceMeta.Column.CATEGORY; break;
-				case COUNTRY: col = SOURCE_ALIAS + "." + SourceMeta.Column.COUNTRY; break;
-				case LANGUAGE: col = SOURCE_ALIAS + "." + SourceMeta.Column.LANGUAGE; break;
+				case SOURCE: col = SOURCE_ALIAS + "." + SourceMeta.Columns.NAME; break;
+				case CATEGORY: col = SOURCE_ALIAS + "." + SourceMeta.Columns.CATEGORY; break;
+				case COUNTRY: col = SOURCE_ALIAS + "." + SourceMeta.Columns.COUNTRY; break;
+				case LANGUAGE: col = SOURCE_ALIAS + "." + SourceMeta.Columns.LANGUAGE; break;
 				default: throw new Exception("");
 			}
 
@@ -111,15 +111,46 @@ public class ArticlesQueryBuilder {
 	}
 
 	public ArticlesQueryBuilder build() {
-		query = " SELECT * FROM " + ArticleMeta.TABLE_NAME + " " + ARTICLE_ALIAS +
+		query = " SELECT " + ARTICLE_ALIAS + "." + Columns._ID + "," +
+					ARTICLE_ALIAS + "." + Columns.API_SOURCE_NAME + "," +
+					ARTICLE_ALIAS + "." + Columns.SOURCE_ID + "," +
+					ARTICLE_ALIAS + "." + Columns.SOURCE_NAME + "," +
+					ARTICLE_ALIAS + "." + Columns.AUTHOR + "," +
+					ARTICLE_ALIAS + "." + Columns.TITLE + "," +
+					ARTICLE_ALIAS + "." + Columns.DESCRIPTION + "," +
+					ARTICLE_ALIAS + "." + Columns.URL + "," +
+					ARTICLE_ALIAS + "." + Columns.URL_TO_IMAGE + "," +
+					ARTICLE_ALIAS + "." + Columns.PUBLISHED_AT + "," +
+					ARTICLE_ALIAS + "." + Columns.CREATED_AT + "," +
+					ARTICLE_ALIAS + "." + Columns.UPDATED_AT + "," +
+					ARTICLE_ALIAS + "." + Columns.STATUS +
+
+					" FROM " + ArticleMeta.TABLE_NAME + " " + ARTICLE_ALIAS +
 					" LEFT OUTER JOIN " + SourceMeta.TABLE_NAME + " " + SOURCE_ALIAS +
-					" ON " + SOURCE_ALIAS + "." + SourceMeta.Column.ID + " = " + ARTICLE_ALIAS + "." + ArticleMeta.Column.SOURCE_ID +
+					" ON " + SOURCE_ALIAS + "." + SourceMeta.Columns.ID + " = " + ARTICLE_ALIAS + "." + Columns.SOURCE_ID +
 					" WHERE 1 = 1 " +
 					(StringUtils.isEmpty(searchPart) ? "" : " AND (" + searchPart + ")") +
 					(StringUtils.isEmpty(filterPart) ? "" : " AND (" + filterPart + ")") +
 					(StringUtils.isEmpty(orderByPart) ? "" : " ORDER BY " + orderByPart) +
 					" LIMIT " + limit +
-					" OFFSET " + offset ;
+					" OFFSET " + offset;
+
+		int i = 1;
+		mapColumnToIndex = new HashMap<>();
+		mapColumnToIndex.put(Columns._ID.getName(), i++);
+		mapColumnToIndex.put(Columns.API_SOURCE_NAME.getName(), i++);
+		mapColumnToIndex.put(Columns.SOURCE_ID.getName(), i++);
+		mapColumnToIndex.put(Columns.SOURCE_NAME.getName(), i++);
+		mapColumnToIndex.put(Columns.AUTHOR.getName(), i++);
+		mapColumnToIndex.put(Columns.TITLE.getName(), i++);
+		mapColumnToIndex.put(Columns.DESCRIPTION.getName(), i++);
+		mapColumnToIndex.put(Columns.URL.getName(), i++);
+		mapColumnToIndex.put(Columns.URL_TO_IMAGE.getName(), i++);
+		mapColumnToIndex.put(Columns.PUBLISHED_AT.getName(), i++);
+		mapColumnToIndex.put(Columns.CREATED_AT.getName(), i++);
+		mapColumnToIndex.put(Columns.UPDATED_AT.getName(), i++);
+		mapColumnToIndex.put(Columns.STATUS.getName(), i);
+
 		return this;
 	}
 
@@ -134,7 +165,7 @@ public class ArticlesQueryBuilder {
 		return queryParams;
 	}
 
-	public Map<ArticleMeta.Column, Integer> getMapColumnToIndex() {
+	public Map<String, Integer> getMapColumnToIndex() {
 		return mapColumnToIndex;
 	}
 }

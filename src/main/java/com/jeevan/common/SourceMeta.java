@@ -6,7 +6,7 @@ package com.jeevan.common;
 public class SourceMeta {
 	public static final String TABLE_NAME = "sources";
 
-	public enum Column {
+	public enum Columns {
 		_ID("_id"),
 		API_SOURCE_NAME("api_source_name"),
 		ID("s_id"),
@@ -22,7 +22,7 @@ public class SourceMeta {
 
 		private String name;
 
-		Column(String name) {
+		Columns(String name) {
 			this.name = name;
 		}
 	}
