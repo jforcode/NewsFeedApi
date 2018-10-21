@@ -1,4 +1,4 @@
-package com.jeevan.feed;
+package com.jeevan.feed.dao;
 
 import com.jeevan.feed.reqModels.FeedRequest;
 import com.jeevan.feed.reqModels.FilterParams;
@@ -12,7 +12,7 @@ import java.util.Map;
  */
 public class ArticlesQueryBuilder {
 	private List<Object> queryParameters;
-	private Map<ArticlesMeta.Column, Integer> mapColumnToIndex;
+	private Map<Article.Meta.Column, Integer> mapColumnToIndex;
 
 	public ArticlesQueryBuilder(FeedRequest req) {
 		this.withPagination(req.getPageNum(), req.getPageSize())
@@ -49,7 +49,7 @@ public class ArticlesQueryBuilder {
 		return null;
 	}
 
-	public Map<ArticlesMeta.Column, Integer> getMapColumnToIndex() {
+	public Map<Article.Meta.Column, Integer> getMapColumnToIndex() {
 		return mapColumnToIndex;
 	}
 }

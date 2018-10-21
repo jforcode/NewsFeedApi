@@ -1,7 +1,7 @@
 package com.jeevan.feed.reqModels;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.jeevan.feed.daoModels.Article;
+import com.jeevan.feed.dao.Article;
 
 import java.util.List;
 

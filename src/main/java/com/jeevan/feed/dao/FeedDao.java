@@ -1,7 +1,6 @@
-package com.jeevan.feed;
+package com.jeevan.feed.dao;
 
 import com.jeevan.factories.DbFactory;
-import com.jeevan.feed.daoModels.Article;
 import com.jeevan.feed.reqModels.FeedRequest;
 
 import java.sql.Connection;
@@ -15,7 +14,8 @@ import java.util.Map;
 /**
  * Created by jeevan on 10/21/18.
  */
-public class FeedDao {
+
+public class FeedDao implements IFeedDao {
 	public List<Article> getArticles(FeedRequest req) throws SQLException {
 		ArticlesQueryBuilder helper = new ArticlesQueryBuilder(req).build();
 		String query = helper.getQuery();
@@ -37,7 +37,7 @@ public class FeedDao {
 		}
 	}
 
-	private Article getArticleFromResultSet(Map<ArticlesMeta.Column, Integer> mapColumnToIndex, ResultSet rs) {
+	private Article getArticleFromResultSet(Map<Article.Meta.Column, Integer> mapColumnToIndex, ResultSet rs) {
 		return null;
 	}
 

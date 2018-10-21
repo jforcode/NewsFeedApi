@@ -1,8 +1,7 @@
 package com.jeevan.feed.reqModels;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.jeevan.feed.Defaults;
+import com.jeevan.feed.Meta.Defaults;
 
 import java.util.List;
 
