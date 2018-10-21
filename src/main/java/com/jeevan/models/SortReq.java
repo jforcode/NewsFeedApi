@@ -1,9 +1,12 @@
 package com.jeevan.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * Created by jeevan on 8/15/18.
  */
 public class SortReq {
+	@JsonProperty("sortBy")
 	private String sortBy;
 	private boolean descOrder;
 
