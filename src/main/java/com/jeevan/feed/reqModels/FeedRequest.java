@@ -2,6 +2,7 @@ package com.jeevan.feed.reqModels;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.jeevan.feed.Meta.Defaults;
+import com.jeevan.feed.Meta.SortBy;
 
 import java.util.List;
 
@@ -68,7 +69,7 @@ public class FeedRequest {
 		if (pageNum <= 0) pageNum = Defaults.PAGE_NUM;
 		if (pageSize <= 0) pageSize = Defaults.PAGE_SIZE;
 		if (searchTerm == null) searchTerm = "";
-		if (sortParams == null || Defaults.SortBy.searchByName(sortParams.getSortBy()) == null) {
+		if (sortParams == null || SortBy.searchByName(sortParams.getSortBy()) == null) {
 			sortParams = Defaults.SORT_BY;
 		}
 	}
