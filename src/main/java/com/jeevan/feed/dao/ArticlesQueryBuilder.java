@@ -12,6 +12,8 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.util.*;
 
+import static java.util.stream.Collectors.joining;
+
 /**
  * Created by jeevan on 10/21/18.
  */
@@ -29,6 +31,7 @@ public class ArticlesQueryBuilder {
 	private List<Object> filterParams;
 
 	private String query = "";
+	private String countQuery = "";
 	private List<Object> queryParams;
 	private Map<String, Integer> mapColumnToIndex;
 
@@ -111,51 +114,36 @@ public class ArticlesQueryBuilder {
 	}
 
 	public ArticlesQueryBuilder build() {
-		query = " SELECT " + ARTICLE_ALIAS + "." + Columns._ID + "," +
-					ARTICLE_ALIAS + "." + Columns.API_SOURCE_NAME + "," +
-					ARTICLE_ALIAS + "." + Columns.SOURCE_ID + "," +
-					ARTICLE_ALIAS + "." + Columns.SOURCE_NAME + "," +
-					ARTICLE_ALIAS + "." + Columns.AUTHOR + "," +
-					ARTICLE_ALIAS + "." + Columns.TITLE + "," +
-					ARTICLE_ALIAS + "." + Columns.DESCRIPTION + "," +
-					ARTICLE_ALIAS + "." + Columns.URL + "," +
-					ARTICLE_ALIAS + "." + Columns.URL_TO_IMAGE + "," +
-					ARTICLE_ALIAS + "." + Columns.PUBLISHED_AT + "," +
-					ARTICLE_ALIAS + "." + Columns.CREATED_AT + "," +
-					ARTICLE_ALIAS + "." + Columns.UPDATED_AT + "," +
-					ARTICLE_ALIAS + "." + Columns.STATUS +
+		String cols = Arrays.stream(Columns.values())
+						  .map(col -> ARTICLE_ALIAS + "." + col)
+						  .collect(joining(", "));
 
-					" FROM " + ArticleMeta.TABLE_NAME + " " + ARTICLE_ALIAS +
-					" LEFT OUTER JOIN " + SourceMeta.TABLE_NAME + " " + SOURCE_ALIAS +
-					" ON " + SOURCE_ALIAS + "." + SourceMeta.Columns.ID + " = " + ARTICLE_ALIAS + "." + Columns.SOURCE_ID +
-					" WHERE 1 = 1 " +
-					(StringUtils.isEmpty(searchPart) ? "" : " AND (" + searchPart + ")") +
-					(StringUtils.isEmpty(filterPart) ? "" : " AND (" + filterPart + ")") +
-					(StringUtils.isEmpty(orderByPart) ? "" : " ORDER BY " + orderByPart) +
-					" LIMIT " + limit +
-					" OFFSET " + offset;
+		String joinPart = " FROM " + ArticleMeta.TABLE_NAME + " " + ARTICLE_ALIAS +
+							  " LEFT OUTER JOIN " + SourceMeta.TABLE_NAME + " " + SOURCE_ALIAS +
+							  " ON " + SOURCE_ALIAS + "." + SourceMeta.Columns.ID + " = " + ARTICLE_ALIAS + "." + Columns.SOURCE_ID;
+		String wherePart = " WHERE 1 = 1 " +
+							   (StringUtils.isEmpty(searchPart) ? "" : " AND (" + searchPart + ")") +
+							   (StringUtils.isEmpty(filterPart) ? "" : " AND (" + filterPart + ")");
+		String orderPart = StringUtils.isEmpty(orderByPart) ? "" : " ORDER BY " + orderByPart;
+		String pagePart = " LIMIT " + limit + " OFFSET " + offset;
 
-		int i = 1;
+		query = "SELECT " + cols + joinPart + wherePart + orderPart + pagePart;
+		countQuery = "SELECT COUNT(*) " + joinPart + wherePart;
+
+		final int[] i = {1};
 		mapColumnToIndex = new HashMap<>();
-		mapColumnToIndex.put(Columns._ID.getName(), i++);
-		mapColumnToIndex.put(Columns.API_SOURCE_NAME.getName(), i++);
-		mapColumnToIndex.put(Columns.SOURCE_ID.getName(), i++);
-		mapColumnToIndex.put(Columns.SOURCE_NAME.getName(), i++);
-		mapColumnToIndex.put(Columns.AUTHOR.getName(), i++);
-		mapColumnToIndex.put(Columns.TITLE.getName(), i++);
-		mapColumnToIndex.put(Columns.DESCRIPTION.getName(), i++);
-		mapColumnToIndex.put(Columns.URL.getName(), i++);
-		mapColumnToIndex.put(Columns.URL_TO_IMAGE.getName(), i++);
-		mapColumnToIndex.put(Columns.PUBLISHED_AT.getName(), i++);
-		mapColumnToIndex.put(Columns.CREATED_AT.getName(), i++);
-		mapColumnToIndex.put(Columns.UPDATED_AT.getName(), i++);
-		mapColumnToIndex.put(Columns.STATUS.getName(), i);
+		Arrays.stream(Columns.values())
+			.forEach(col -> mapColumnToIndex.put(col.getName(), i[0]++));
 
 		return this;
 	}
 
 	public String getQuery() {
 		return query;
+	}
+
+	public String getCountQuery() {
+		return countQuery;
 	}
 
 	public List<Object> getQueryParams() {
