@@ -1,8 +1,7 @@
 package com.jeevan.feed.dao;
 
-import com.jeevan.common.ArticleMeta;
 import com.jeevan.common.ArticleMeta.Columns;
-import com.jeevan.factories.DbFactory;
+import com.jeevan.DbFactory;
 import com.jeevan.feed.reqModels.FeedRequest;
 
 import java.sql.Connection;

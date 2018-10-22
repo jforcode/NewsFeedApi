@@ -22,6 +22,10 @@ public class SourceMeta {
 
 		private String name;
 
+		public String toString() {
+			return name;
+		}
+
 		Columns(String name) {
 			this.name = name;
 		}

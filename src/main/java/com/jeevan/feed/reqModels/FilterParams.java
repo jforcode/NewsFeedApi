@@ -14,6 +14,11 @@ public class FilterParams {
 	@JsonProperty(value = "value")
 	private String filterValue;
 
+	public FilterParams(String filterType, String filterValue) {
+		this.filterType = filterType;
+		this.filterValue = filterValue;
+	}
+
 	public String getFilterType() {
 		return filterType;
 	}

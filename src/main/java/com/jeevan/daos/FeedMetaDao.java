@@ -1,6 +1,6 @@
 package com.jeevan.daos;
 
-import com.jeevan.factories.DbFactory;
+import com.jeevan.DbFactory;
 import com.jeevan.models.Feed;
 import org.apache.log4j.Logger;
 

@@ -1,4 +1,4 @@
-package com.jeevan.factories;
+package com.jeevan;
 
 import com.jeevan.Application;
 import com.zaxxer.hikari.HikariConfig;

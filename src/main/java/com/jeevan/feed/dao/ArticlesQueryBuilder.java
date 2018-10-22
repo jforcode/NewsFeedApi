@@ -33,6 +33,7 @@ public class ArticlesQueryBuilder {
 	private String query = "";
 	private String countQuery = "";
 	private List<Object> queryParams;
+	private List<Object> countParams;
 	private Map<String, Integer> mapColumnToIndex;
 
 	public ArticlesQueryBuilder(FeedRequest req) throws Exception {
@@ -42,7 +43,7 @@ public class ArticlesQueryBuilder {
 			.withFilterParams(req.getFilterParams());
 	}
 
-	public ArticlesQueryBuilder withPagination(int pageNum, int pageSize) {
+	private ArticlesQueryBuilder withPagination(int pageNum, int pageSize) {
 		if (pageNum <= 0) pageNum = 1;
 		if (pageSize <= 0) pageSize = 0;
 		offset = (pageNum - 1) * pageSize;
@@ -50,21 +51,21 @@ public class ArticlesQueryBuilder {
 		return this;
 	}
 
-	public ArticlesQueryBuilder withSearchTerm(String searchTerm) {
+	private ArticlesQueryBuilder withSearchTerm(String searchTerm) {
 		if (searchTerm == null || searchTerm.isEmpty()) {
 			searchPart = "";
 			searchParams = new ArrayList<>();
 			return this;
 		}
 
-		searchPart = ARTICLE_ALIAS + "." + Columns.TITLE + " LIKE %?% OR " +
-						 ARTICLE_ALIAS + "." + Columns.AUTHOR + " LIKE %?% OR " +
-						 ARTICLE_ALIAS + "." + Columns.DESCRIPTION + " LIKE %?% ";
+		searchPart = ARTICLE_ALIAS + "." + Columns.TITLE + " LIKE '%?%' OR " +
+						 ARTICLE_ALIAS + "." + Columns.AUTHOR + " LIKE '%?%' OR " +
+						 ARTICLE_ALIAS + "." + Columns.DESCRIPTION + " LIKE '%?%' ";
 		searchParams = Arrays.asList(searchTerm, searchTerm, searchTerm);
 		return this;
 	}
 
-	public ArticlesQueryBuilder withSortParams(SortParams sorter) throws Exception {
+	private ArticlesQueryBuilder withSortParams(SortParams sorter) throws Exception {
 		if (sorter == null) throw new Exception("");
 		SortBy sortBy = SortBy.searchByName(sorter.getSortBy());
 		if (sortBy == null) throw new Exception("");
@@ -81,7 +82,7 @@ public class ArticlesQueryBuilder {
 		return this;
 	}
 
-	public ArticlesQueryBuilder withFilterParams(List<FilterParams> filterParams) throws Exception {
+	private ArticlesQueryBuilder withFilterParams(List<FilterParams> filterParams) throws Exception {
 		Map<String, List<String>> mapDbColToValues = new HashMap<>();
 		for (FilterParams filter : filterParams) {
 			List<String> values = mapDbColToValues.getOrDefault(filter.getFilterType(), new ArrayList<>());
@@ -135,6 +136,17 @@ public class ArticlesQueryBuilder {
 		Arrays.stream(Columns.values())
 			.forEach(col -> mapColumnToIndex.put(col.getName(), i[0]++));
 
+		queryParams = new ArrayList<>();
+		countParams = new ArrayList<>();
+		if (searchParams != null) {
+			queryParams.addAll(searchParams);
+			countParams.addAll(searchParams);
+		}
+		if (filterParams != null) {
+			queryParams.addAll(filterParams);
+			countParams.addAll(filterParams);
+		}
+
 		return this;
 	}
 
@@ -147,10 +159,11 @@ public class ArticlesQueryBuilder {
 	}
 
 	public List<Object> getQueryParams() {
-		queryParams = new ArrayList<>();
-		if (searchParams != null) queryParams.addAll(searchParams);
-		if (filterParams != null) queryParams.addAll(filterParams);
 		return queryParams;
+	}
+
+	public List<Object> getCountParams() {
+		return countParams;
 	}
 
 	public Map<String, Integer> getMapColumnToIndex() {

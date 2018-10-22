@@ -2,9 +2,7 @@ package com.jeevan;
 
 import com.jeevan.controllers.FeedMetaController;
 import com.jeevan.factories.DaoFactory;
-import com.jeevan.factories.DbFactory;
 import com.jeevan.factories.ServiceFactory;
-import com.jeevan.services.FeedMetaService;
 
 import java.io.IOException;
 import java.io.InputStream;

@@ -1,10 +1,9 @@
 package com.jeevan.daos;
 
-import com.jeevan.factories.DbFactory;
+import com.jeevan.DbFactory;
 import com.jeevan.models.Feed;
 import com.jeevan.models.FeedCategory;
 import com.jeevan.models.FeedOrderableBy;
-import com.jeevan.models.Publisher;
 import com.jeevan.utils.Util;
 import org.springframework.util.StringUtils;
 
