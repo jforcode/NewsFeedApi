@@ -1,7 +1,7 @@
 package com.jeevan.feed.reqModels;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.jeevan.feed.dao.Article;
+import com.jeevan.core.models.Article;
 
 import java.util.List;
 
@@ -12,8 +12,12 @@ public class FeedResponse {
 	@JsonProperty("articles")
 	List<Article> articles;
 
-	public FeedResponse(List<Article> articles) {
+	@JsonProperty("countArticles")
+	int countArticles;
+
+	public FeedResponse(List<Article> articles, int countArticles) {
 		this.articles = articles;
+		this.countArticles = countArticles;
 	}
 
 	public List<Article> getArticles() {
@@ -22,5 +26,13 @@ public class FeedResponse {
 
 	public void setArticles(List<Article> articles) {
 		this.articles = articles;
+	}
+
+	public int getCountArticles() {
+		return countArticles;
+	}
+
+	public void setCountArticles(int countArticles) {
+		this.countArticles = countArticles;
 	}
 }

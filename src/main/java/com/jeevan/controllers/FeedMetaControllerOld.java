@@ -9,11 +9,11 @@ import java.sql.SQLException;
 /**
  * Created by jeevan on 8/19/18.
  */
-public class FeedMetaController {
+public class FeedMetaControllerOld {
 	private FeedMetaService feedMetaService;
 	private String excelFileLocation;
 
-	public FeedMetaController(String excelFileLocation) {
+	public FeedMetaControllerOld(String excelFileLocation) {
 		this.feedMetaService = ServiceFactory.getFeedMetaService();
 		this.excelFileLocation = excelFileLocation;
 	}

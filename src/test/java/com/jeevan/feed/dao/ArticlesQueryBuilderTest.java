@@ -1,16 +1,13 @@
 package com.jeevan.feed.dao;
 
-import com.jeevan.common.ArticleMeta;
-import com.jeevan.common.ArticleMeta.Columns;
+import com.jeevan.core.meta.ArticleMeta.Columns;
 import com.jeevan.feed.reqModels.FeedRequest;
 import com.jeevan.feed.reqModels.FilterParams;
 import com.jeevan.feed.reqModels.SortParams;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 

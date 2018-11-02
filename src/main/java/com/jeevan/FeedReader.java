@@ -1,6 +1,6 @@
 package com.jeevan;
 
-import com.jeevan.controllers.FeedMetaController;
+import com.jeevan.controllers.FeedMetaControllerOld;
 import com.jeevan.factories.DaoFactory;
 import com.jeevan.factories.ServiceFactory;
 
@@ -25,7 +25,7 @@ public class FeedReader {
 		ServiceFactory.init();
 
 		String excelFileName = "src/main/resources/news_feed.csv";
-		FeedMetaController controller = new FeedMetaController(excelFileName);
+		FeedMetaControllerOld controller = new FeedMetaControllerOld(excelFileName);
 		controller.readExcelAndCreateFeedTable();
 	}
 }

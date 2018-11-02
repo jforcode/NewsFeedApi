@@ -1,6 +1,8 @@
-package com.jeevan.feed.dao;
+package com.jeevan.core.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import java.util.Objects;
 
 /**
  * Created by jeevan on 10/20/18.
@@ -146,5 +148,46 @@ return this;
 	public Article setStatus(String status) {
 		this.status = status;
 return this;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Article article = (Article) o;
+		return Objects.equals(apiSourceName, article.apiSourceName) &&
+				   Objects.equals(sourceId, article.sourceId) &&
+				   Objects.equals(sourceName, article.sourceName) &&
+				   Objects.equals(author, article.author) &&
+				   Objects.equals(title, article.title) &&
+				   Objects.equals(description, article.description) &&
+				   Objects.equals(url, article.url) &&
+				   Objects.equals(urlToImage, article.urlToImage) &&
+				   Objects.equals(publishedAt, article.publishedAt) &&
+				   Objects.equals(status, article.status);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(apiSourceName, sourceId, sourceName, author, title, description, url, urlToImage, publishedAt, status);
+	}
+
+	@Override
+	public String toString() {
+		return "Article{" +
+				   "_id=" + _id +
+				   ", apiSourceName='" + apiSourceName + '\'' +
+				   ", sourceId='" + sourceId + '\'' +
+				   ", sourceName='" + sourceName + '\'' +
+				   ", author='" + author + '\'' +
+				   ", title='" + title + '\'' +
+				   ", description='" + description + '\'' +
+				   ", url='" + url + '\'' +
+				   ", urlToImage='" + urlToImage + '\'' +
+				   ", publishedAt=" + publishedAt +
+				   ", createdAt=" + createdAt +
+				   ", updatedAt=" + updatedAt +
+				   ", status='" + status + '\'' +
+				   '}';
 	}
 }

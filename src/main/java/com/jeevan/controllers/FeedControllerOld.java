@@ -14,12 +14,10 @@ import java.util.List;
  * Created by jeevan on 8/15/18.
  */
 
-@CrossOrigin
-@RestController
-public class FeedController {
+public class FeedControllerOld {
 	private final FeedService feedService;
 
-	public FeedController() {
+	public FeedControllerOld() {
 		this.feedService = ServiceFactory.getFeedService();
 	}
 
@@ -28,7 +26,7 @@ public class FeedController {
 		return "Hello There!";
 	}
 
-	@RequestMapping(method = RequestMethod.POST, path = "/feed")
+	@RequestMapping(method = RequestMethod.POST, path = "/asdf")
 	public FeedRes getFeed(
 			@RequestBody FeedPostReq req)
 			throws SQLException, IOException {

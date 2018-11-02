@@ -1,6 +1,7 @@
 package com.jeevan.feed;
 
-import com.jeevan.feed.dao.Article;
+import com.jeevan.core.models.Article;
+import com.jeevan.feed.dao.IArticlesQueryBuilder;
 import com.jeevan.feed.dao.IFeedDao;
 import com.jeevan.feed.reqModels.FeedRequest;
 import com.jeevan.feed.reqModels.FeedResponse;
@@ -29,7 +30,9 @@ public class FeedController {
 		}
 		req.Fix();
 
-		List<Article> articles = feedDao.getArticles(req);
-		return new FeedResponse(articles);
+		IArticlesQueryBuilder builder = Factory.getArticlesQueryBuilder(req);
+		List<Article> articles = feedDao.getArticles(builder);
+		int countArticles = feedDao.getCountArticles(builder);
+		return new FeedResponse(articles, countArticles);
 	}
 }

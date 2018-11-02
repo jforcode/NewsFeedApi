@@ -1,4 +1,4 @@
-package com.jeevan.common;
+package com.jeevan.core.meta;
 
 public class ArticleMeta {
 	public static final String TABLE_NAME = "articles";

@@ -1,5 +1,6 @@
-package com.jeevan.feed.Meta;
+package com.jeevan.feed;
 
+import com.jeevan.core.meta.SortBy;
 import com.jeevan.feed.reqModels.SortParams;
 
 /**

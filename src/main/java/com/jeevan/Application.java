@@ -12,7 +12,6 @@ public class Application {
 
     public static void main(String[] args) throws IOException {
 		ServiceFactory.init();
-		DaoFactory.init();
 
 		DbFactory.initialize(Application.class, "hikari.properties");
 

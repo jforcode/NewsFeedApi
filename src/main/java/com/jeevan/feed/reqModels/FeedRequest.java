@@ -1,9 +1,10 @@
 package com.jeevan.feed.reqModels;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.jeevan.feed.Meta.Defaults;
-import com.jeevan.feed.Meta.SortBy;
+import com.jeevan.feed.Defaults;
+import com.jeevan.core.meta.SortBy;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -66,11 +67,14 @@ public class FeedRequest {
 	}
 
 	public void Fix() {
-		if (pageNum <= 0) pageNum = Defaults.PAGE_NUM;
-		if (pageSize <= 0) pageSize = Defaults.PAGE_SIZE;
+		if (pageNum == null || pageNum <= 0) pageNum = Defaults.PAGE_NUM;
+		if (pageSize == null || pageSize <= 0) pageSize = Defaults.PAGE_SIZE;
 		if (searchTerm == null) searchTerm = "";
 		if (sortParams == null || SortBy.searchByName(sortParams.getSortBy()) == null) {
 			sortParams = Defaults.SORT_BY;
+		}
+		if (filterParams == null) {
+			filterParams = new ArrayList<>();
 		}
 	}
 }

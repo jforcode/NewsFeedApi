@@ -1,14 +1,13 @@
 package com.jeevan.feed.dao;
 
-import com.jeevan.feed.dao.Article;
-import com.jeevan.feed.reqModels.FeedRequest;
+import com.jeevan.core.models.Article;
 
-import java.sql.SQLException;
 import java.util.List;
 
 /**
  * Created by jeevan on 10/21/18.
  */
 public interface IFeedDao {
-	List<Article> getArticles(FeedRequest req) throws Exception;
+	List<Article> getArticles(IArticlesQueryBuilder helper) throws Exception;
+	int getCountArticles(IArticlesQueryBuilder helper) throws Exception;
 }

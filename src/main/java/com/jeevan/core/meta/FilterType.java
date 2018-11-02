@@ -1,4 +1,4 @@
-package com.jeevan.feed.Meta;
+package com.jeevan.core.meta;
 
 public enum FilterType {
 	API_SOURCE("apiSource"),

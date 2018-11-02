@@ -25,7 +25,7 @@ public class SortParams {
 		this.sortBy = sortBy;
 	}
 
-	public boolean isAscOrder() {
+	public boolean isDescOrder() {
 		return ascOrder;
 	}
 
