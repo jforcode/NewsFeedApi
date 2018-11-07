@@ -9,10 +9,10 @@ import java.util.Objects;
  */
 public class SourceFilter implements IFilter {
 	@JsonProperty(value = "sourceId")
-	String sourceId;
+	public String sourceId;
 
 	@JsonProperty(value = "sourceName")
-	String sourceName;
+	public String sourceName;
 
 	public SourceFilter(String sourceId, String sourceName) {
 		this.sourceId = sourceId;

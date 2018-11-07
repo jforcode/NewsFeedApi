@@ -55,7 +55,6 @@ public class FiltersDao implements IFiltersDao {
 			try {
 				String category = rs.getString(SourceMeta.COL_CATEGORY);
 				return new CategoryFilter(category);
-
 			} catch (SQLException e) {
 				System.out.println("Error while getting category filter: " + e.getLocalizedMessage());
 				return null;
@@ -68,7 +67,6 @@ public class FiltersDao implements IFiltersDao {
 			try {
 				String language = rs.getString(SourceMeta.COL_LANGUAGE);
 				return new LanguageFilter(language);
-
 			} catch (SQLException e) {
 				System.out.println("Error while getting language filter: " + e.getLocalizedMessage());
 				return null;
@@ -81,7 +79,6 @@ public class FiltersDao implements IFiltersDao {
 			try {
 				String country = rs.getString(SourceMeta.COL_COUNTRY);
 				return new CountryFilter(country);
-
 			} catch (SQLException e) {
 				System.out.println("Error while getting country filter: " + e.getLocalizedMessage());
 				return null;
