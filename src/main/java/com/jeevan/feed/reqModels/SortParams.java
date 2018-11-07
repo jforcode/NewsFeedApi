@@ -7,10 +7,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public class SortParams {
 	@JsonProperty(value = "by")
-	private String sortBy;
+	String sortBy;
 
 	@JsonProperty(value = "order")
-	private boolean ascOrder;
+	boolean ascOrder;
+
+	public SortParams() {
+
+	}
 
 	public SortParams(String sortBy, boolean ascOrder) {
 		this.sortBy = sortBy;

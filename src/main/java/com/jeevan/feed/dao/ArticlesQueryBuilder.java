@@ -113,7 +113,7 @@ public class ArticlesQueryBuilder implements IArticlesQueryBuilder {
 
 			String col;
 			switch (filterType) {
-				case SOURCE: col = SOURCE_ALIAS + "." + SourceMeta.COL_NAME; break;
+				case SOURCE: col = SOURCE_ALIAS + "." + SourceMeta.COL_ID; break;
 				case CATEGORY: col = SOURCE_ALIAS + "." + SourceMeta.COL_CATEGORY; break;
 				case COUNTRY: col = SOURCE_ALIAS + "." + SourceMeta.COL_COUNTRY; break;
 				case LANGUAGE: col = SOURCE_ALIAS + "." + SourceMeta.COL_LANGUAGE; break;

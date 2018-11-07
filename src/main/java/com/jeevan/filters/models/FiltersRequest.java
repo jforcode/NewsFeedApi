@@ -8,5 +8,4 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class FiltersRequest {
 	@JsonProperty(value = "filterLimit")
 	public int filterLimit;
-
 }
